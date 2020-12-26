@@ -21,6 +21,7 @@ function SplitApp({ canvas, dom }) {
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
+  const updateRoute = useStore((state) => state.updateRoute)
   let r3fArr = []
   let compArr = []
   Children.forEach(Component().props.children, (child) => {
@@ -32,7 +33,8 @@ function MyApp({ Component, pageProps }) {
   })
 
   useEffect(() => {
-    useStore.setState({ router: router })
+    updateRoute(router)
+    // useStore.setState({ router: router })
   }, [router])
 
   return r3fArr.length > 0 ? (

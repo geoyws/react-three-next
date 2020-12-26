@@ -1,7 +1,9 @@
-{
-  "presets": [
+module.exports = (api) => {
+  api.cache(true);
+
+  const presets = [
     [
-      "next/babel",
+      'next/babel',
       {
         "preset-env": {},
         "transform-runtime": {},
@@ -9,8 +11,13 @@
         "class-properties": {}
       }
     ]
-  ],
-  "plugins": [
+  ];
+  const plugins = [
     "babel-plugin-glsl"
-  ]
-}
+  ];
+
+  return {
+    presets,
+    plugins,
+  };
+};

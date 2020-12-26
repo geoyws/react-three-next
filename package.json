@@ -9,8 +9,9 @@
     "lint": "npm run prettier && npm run eslint",
     "eslint": "eslint --fix 'src/**/*.{js,jsx}' --ext jsconfig.json",
     "prettier": "prettier --list-different '**/*.{js,jsx,md}'",
-    "dev": "next dev",
+    "dev": "node server/index.js --max-old-space-size=4096",
     "build": "node postinstall.js && next build",
+    "analyze": "ANALYZE=true next build",
     "start": "cross-env NODE_ENV=production node server/index.js"
   },
   "husky": {
@@ -27,12 +28,13 @@
     ]
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^10.0.4",
     "autoprefixer": "^10.1.0",
     "cross-env": "^7.0.2",
-    "express": "^4.17.1",
     "next": "^10.0.3",
     "nodemon": "^2.0.6",
     "postcss": "^8.2.1",
+    "react-three-editable": "^0.8.0",
     "replace-in-file": "^6.1.0",
     "tailwindcss": "^2.0.2"
   },
@@ -43,7 +45,7 @@
     "@babel/preset-react": "^7.12.1",
     "@babel/runtime": "^7.12.5",
     "@react-spring/three": "^9.0.0-rc.3",
-    "@react-three/drei": "^2.2.10",
+    "@react-three/drei": "^2.2.12",
     "@react-three/postprocessing": "^1.5.0",
     "babel-eslint": "^10.1.0",
     "babel-node": "^0.0.1-security",
@@ -74,7 +76,7 @@
     "next-images": "^1.6.0",
     "next-pwa": "^5.0.0",
     "next-react-svg": "^1.1.2",
-    "next-transpile-modules": "^6.0.0",
+    "next-transpile-modules": "4",
     "next-videos": "^1.4.0",
     "prettier": "^2.2.1",
     "raw-loader": "^4.0.2",

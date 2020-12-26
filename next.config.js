@@ -8,12 +8,20 @@ const videos = require('next-videos')
 const fonts = require('next-fonts')
 const reactSvg = require('next-react-svg')
 
-const withTM = require('next-transpile-modules')([
-  '@react-three/drei',
-  'three',
-  '@react-three/postprocessing',
-  'postprocessing',
-])
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+const withTM = require('next-transpile-modules')(
+  [
+    'three',
+    '@react-three/postprocessing',
+    '@react-three/drei',
+    'react-three-editable/dist/components/editable.d.ts',
+    'postprocessing',
+  ],
+  { debug: true, resolveSymlinks: true }
+)
 const withPWA = require('next-pwa')
 
 const prod = process.env.NODE_ENV === 'production'
@@ -36,8 +44,9 @@ module.exports = plugins(
     [reactSvg, { include: path.resolve(__dirname, 'src/assets/svg') }],
     fonts,
     videos,
-    withTM,
     [withPWA, { pwa: { disable: prod ? false : true, dest: 'public' } }],
+    withBundleAnalyzer,
+    withTM,
   ],
   nextConfig
 )

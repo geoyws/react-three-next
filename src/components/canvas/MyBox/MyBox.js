@@ -23,7 +23,7 @@ const MyBox = (props) => {
   const mesh = useRef()
   const materialRef = useRef()
   const [hovered, setHover] = useState(false)
-  const router = useStore((state) => state.router)
+  const setRoute = useStore((state) => state.setRoute)
 
   // temporary fix to prevent error -> keep track of our component's mounted state
   const componentIsMounted = useRef(true)
@@ -44,14 +44,20 @@ const MyBox = (props) => {
         Math.sin(delta / 2) * Math.cos(delta / 2)
     }
   })
+  const e = useStore((state) => state.editable)
+  if (!e) {
+    return <></>
+  }
 
   return (
     <a.mesh
       ref={mesh}
       scale={scale.to((s) => [s, s, s])}
+      editableType='mesh'
       onClick={() => {
-        router.push(`/birds`)
+        setRoute(`/birds`)
       }}
+      uniqueName={props.uniqueName}
       onPointerOver={(e) => setHover(true)}
       onPointerOut={(e) => {
         // temporary fix to prevent error -> keep track of our component's mounted state

@@ -1,6 +1,15 @@
 import useStore from '@/helpers/store'
 import MyBox from '@/components/canvas/MyBox/MyBox'
 import { Helmet } from 'react-helmet'
+// import useStore from '@/helpers/store'
+import dynamic from 'next/dynamic'
+
+// const editable = dynamic(
+//   () => import('react-three-editable/dist/components/editable.d.ts'),
+//   {
+//     ssr: true,
+//   }
+// )
 
 const BoxesDom = () => {
   return (
@@ -20,13 +29,18 @@ const Dom = () => {
 }
 
 const BoxGroup = () => {
+  const e = useStore((state) => state.editable)
+  console.log(e)
+  if (!e) {
+    return <></>
+  }
   return (
-    <group position={[0, 0, -20]}>
-      <MyBox position={[10, 0, -5]} />
-      <MyBox position={[-10, 0, -5]} />
-      <MyBox position={[0, 10, 0]} />
-      <MyBox position={[0, -5, 5]} />
-    </group>
+    <e.group uniqueName='Box Group' position={[0, 0, -20]}>
+      <MyBox uniqueName='Box 1' position={[10, 0, -5]} />
+      <MyBox uniqueName='Box 2' position={[-10, 0, -5]} />
+      <MyBox uniqueName='Box 3' position={[0, 10, 0]} />
+      <MyBox uniqueName='Box 4' position={[0, -5, 5]} />
+    </e.group>
   )
 }
 

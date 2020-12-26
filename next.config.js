@@ -17,18 +17,53 @@ const withTM = require('next-transpile-modules')(
     'three',
     '@react-three/postprocessing',
     '@react-three/drei',
-    'react-three-editable/dist/components/editable.d.ts',
+    // 'react-three-editable/dist/components/editable.d.ts',
     'postprocessing',
   ],
   { debug: true, resolveSymlinks: true }
 )
 const withPWA = require('next-pwa')
+const runtimeCaching = require('next-pwa/cache')
+const withOffline = require('next-offline')
+
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
 
 const prod = process.env.NODE_ENV === 'production'
 
 const nextConfig = {
   // target: 'serverless',
   webpack(config) {
+    config.plugins = config.plugins || []
+
+    // config.resolve.alias['three'] = path.resolve(
+    //   __dirname,
+    //   '.',
+    //   'node_modules',
+    //   'three'
+    // )
+
+    // config.resolve.alias['@react-three/drei'] = path.resolve(
+    //   __dirname,
+    //   '.',
+    //   'node_modules',
+    //   '@react-three/drei'
+    // )
+
+    // config.plugins.push(
+    //   new DuplicatePackageCheckerPlugin({
+    //     verbose: false,
+    //     strict: true,
+    //   })
+    // )
+
+    // if you want to do a custom build to reduce the size of threejs
+    // config.plugins.push(
+    //   new webpack.NormalModuleReplacementPlugin(
+    //     /three.module.js/,
+    //     path.resolve('src/utils/three_minimal.js')
+    //   )
+    // )
+
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
       exclude: /node_modules/,
@@ -44,7 +79,40 @@ module.exports = plugins(
     [reactSvg, { include: path.resolve(__dirname, 'src/assets/svg') }],
     fonts,
     videos,
-    [withPWA, { pwa: { disable: prod ? false : true, dest: 'public' } }],
+    // [
+    //   withPWA,
+    //   { pwa: { runtimeCaching, disable: prod ? false : true, dest: 'public' } },
+    // ],
+    [
+      withOffline,
+      {
+        workboxOpts: {
+          swDest: process.env.NEXT_EXPORT
+            ? 'service-worker.js'
+            : 'static/service-worker.js',
+          runtimeCaching: [
+            {
+              urlPattern: /^https?.*/,
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'offlineCache',
+                expiration: {
+                  maxEntries: 200,
+                },
+              },
+            },
+          ],
+        },
+        async rewrites() {
+          return [
+            {
+              source: '/service-worker.js',
+              destination: '/_next/static/service-worker.js',
+            },
+          ]
+        },
+      },
+    ],
     withBundleAnalyzer,
     withTM,
   ],

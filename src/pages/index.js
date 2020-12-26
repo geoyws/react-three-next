@@ -1,15 +1,11 @@
 import useStore from '@/helpers/store'
 import MyBox from '@/components/canvas/MyBox/MyBox'
-import { Helmet } from 'react-helmet'
-// import useStore from '@/helpers/store'
-import dynamic from 'next/dynamic'
+import Head from 'next/head'
 
-// const editable = dynamic(
-//   () => import('react-three-editable/dist/components/editable.d.ts'),
-//   {
-//     ssr: true,
-//   }
-// )
+// import dynamic from 'next/dynamic'
+// const MyBox = dynamic(() => import('@/components/canvas/MyBox/MyBox'), {
+//   ssr: false,
+// })
 
 const BoxesDom = () => {
   return (
@@ -22,7 +18,9 @@ const BoxesDom = () => {
 const Dom = () => {
   return (
     <>
-      <Helmet title={'Welcome'} />
+      <Head>
+        <title>Welcome</title>
+      </Head>
       <BoxesDom />
     </>
   )

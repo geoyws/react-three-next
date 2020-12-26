@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import { useFrame, extend } from 'react-three-fiber'
-import { a, useSpring } from '@react-spring/three'
+// import { a, useSpring } from '@react-spring/three'
 import { useEffect, useRef, useState } from 'react'
 import useStore from '@/helpers/store'
-import { shaderMaterial } from '@react-three/drei'
+import { shaderMaterial } from '@react-three/drei/shaderMaterial'
 
 import fragment from './glsl/MyBox.frag'
 import vertex from './glsl/MyBox.vert'
@@ -33,7 +33,7 @@ const MyBox = (props) => {
     }
   }, []) // Using an empty dependency array ensures this on
 
-  const { scale } = useSpring({ scale: hovered ? 7 : 5, from: { scale: 5 } })
+  // const { scale } = useSpring({ scale: hovered ? 7 : 5, from: { scale: 5 } })
 
   useFrame((state, delta) => {
     if (mesh.current) {
@@ -50,10 +50,10 @@ const MyBox = (props) => {
   }
 
   return (
-    <a.mesh
+    <mesh
       ref={mesh}
-      scale={scale.to((s) => [s, s, s])}
       editableType='mesh'
+      scale={hovered ? [7, 7, 7] : [5, 5, 5]}
       onClick={() => {
         setRoute(`/birds`)
       }}
@@ -69,7 +69,7 @@ const MyBox = (props) => {
     >
       <boxBufferGeometry args={[0.5, 0.5, 0.5]} />
       <colorShiftMaterial ref={materialRef} attach='material' time={3} />
-    </a.mesh>
+    </mesh>
   )
 }
 

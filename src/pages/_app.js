@@ -3,15 +3,16 @@ import { useRouter } from 'next/router'
 import useStore from '@/helpers/store'
 import { useEffect, Children } from 'react'
 import Preload from '@/components/loading/loading'
-import { Helmet } from 'react-helmet'
-import { helmet } from '../config'
+// import { Helmet } from 'react-helmet'
+import Header from '../config'
 
 import '../assets/styles/globals.css'
 
 function SplitApp({ canvas, dom }) {
   return (
     <>
-      <Helmet {...helmet} />
+      {/* <Helmet {...helmet} /> */}
+      <Header />
       {dom && <div className='mx-auto dom'>{dom}</div>}
       <LCanvas>{canvas && <group>{canvas}</group>}</LCanvas>
       <Preload />
@@ -22,6 +23,11 @@ function SplitApp({ canvas, dom }) {
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const updateRoute = useStore((state) => state.updateRoute)
+  const lang = router.pathname.startsWith('/jp') ? 'jp' : 'en'
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
+
   let r3fArr = []
   let compArr = []
   Children.forEach(Component().props.children, (child) => {

@@ -3,7 +3,7 @@ import { useFrame, useThree } from 'react-three-fiber'
 // import { EffectComposer, Noise, Vignette } from '@react-three/postprocessing'
 import useDarkMode from 'use-dark-mode'
 import * as THREE from 'three'
-import useStore from '@/helpers/store'
+import { editable as e } from 'react-three-editable'
 
 const Rig = () => {
   const { camera, mouse } = useThree()
@@ -18,10 +18,9 @@ const Rig = () => {
 
 const Effects = () => {
   const darkMode = useDarkMode()
-  const e = useStore((state) => state.editable)
-  console.log(e)
+
   if (!e) {
-    return <></>
+    return null
   }
   const ECamera = e(PerspectiveCamera, 'perspectiveCamera')
 

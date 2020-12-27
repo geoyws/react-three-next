@@ -4,6 +4,7 @@ import { useFrame, extend } from 'react-three-fiber'
 import { useEffect, useRef, useState } from 'react'
 import useStore from '@/helpers/store'
 import { shaderMaterial } from '@react-three/drei/shaderMaterial'
+import { editable as e } from 'react-three-editable'
 
 import fragment from './glsl/MyBox.frag'
 import vertex from './glsl/MyBox.vert'
@@ -44,13 +45,9 @@ const MyBox = (props) => {
         Math.sin(delta / 2) * Math.cos(delta / 2)
     }
   })
-  const e = useStore((state) => state.editable)
-  if (!e) {
-    return <></>
-  }
 
   return (
-    <mesh
+    <e.mesh
       ref={mesh}
       editableType='mesh'
       scale={hovered ? [7, 7, 7] : [5, 5, 5]}
@@ -69,7 +66,7 @@ const MyBox = (props) => {
     >
       <boxBufferGeometry args={[0.5, 0.5, 0.5]} />
       <colorShiftMaterial ref={materialRef} attach='material' time={3} />
-    </mesh>
+    </e.mesh>
   )
 }
 

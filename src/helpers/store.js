@@ -1,7 +1,10 @@
 import { createRef } from 'react'
 import create from 'zustand'
+import { configure, EditorStore } from 'react-three-editable'
 
-// import { editable as e, configure } from 'react-three-editable'
+const bind = configure({
+  localStorageNamespace: process.env.projectNameSpace + '',
+})
 
 const useStore = create((set, get) => {
   return {
@@ -12,19 +15,31 @@ const useStore = create((set, get) => {
     scene: null,
     r3e: null,
     editable: null,
+    updateScene: (scene) => {
+      set({ scene })
+      if (scene) {
+        if (process.env.NODE_ENV === 'development') {
+          // bind()({ state: editable, gl: useStore.getState().gl, scene })
+          console.log(EditorStore)
+          // EditorStore.createSnapshot()
+          // console.log(useStore.getState().scene.children)
+        }
+      }
+    },
     bindEditable: (gl, scene) => {
-      import(`react-three-editable`).then((e) => {
-        const bind = e.configure({
-          enablePersistence: true,
-          localStorageNamespace: process.env.projectNameSpace + '',
-        })
-        console.log(scene)
-        set({ r3e: e, editable: e.editable })
-        console.log(get().editable)
-        // useStore.setState({ editable: e.editable })
+      // import(`react-three-editable`).then((e) => {
 
-        console.log('yeah !')
-      })
+      // const bind = configure({
+      //   enablePersistence: true,
+      //   localStorageNamespace: process.env.projectNameSpace + '',
+      // })
+      // console.log(scene)
+      // set({ r3e: e, editable: e.editable })
+      // console.log(get().editable)
+      // useStore.setState({ editable: e.editable })
+
+      console.log('yeah !')
+      // })
     },
     setRoute: (route) => {
       set({ loading: true })
@@ -51,24 +66,5 @@ const useStore = create((set, get) => {
     },
   }
 })
-
-useStore.subscribe(
-  (scene) => {
-    const r3e = useStore.getState().r3e
-    console.log(scene)
-    if (scene && r3e) {
-      if (process.env.NODE_ENV === 'development') {
-        const bind = r3e.configure({
-          enablePersistence: true,
-          localStorageNamespace: process.env.projectNameSpace + '',
-        })
-        bind()({ gl: useStore.getState().gl, scene: scene })
-        console.log(useStore.getState().scene.children)
-        console.log('nice update')
-      }
-    }
-  },
-  (state) => state.scene
-)
 
 export default useStore

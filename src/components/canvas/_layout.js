@@ -8,20 +8,26 @@ import useStore from '@/helpers/store'
 // const Effects = dynamic(() => import('@/components/canvas/_effects'), {
 //   ssr: false,
 // })
+import { configure, editable } from 'react-three-editable'
+import editableJson from '@/helpers/editableJson.json'
+
+const bind = configure({
+  enablePersistence: true,
+  localStorageNamespace: process.env.projectNameSpace + '',
+})
 
 const UpdateSceneOnLoaded = () => {
   const { scene } = useThree()
-  // const loading = useStore((state) => state.loading)
+  const updateScene = useStore((state) => state.updateScene)
   useEffect(() => {
-    console.log(scene.children)
-    useStore.setState({ scene: scene })
-  }, [scene])
+    updateScene(scene)
+  })
   return null
 }
 
 const LCanvas = ({ children }) => {
   const darkMode = useDarkMode()
-  const bindEditable = useStore((state) => state.bindEditable)
+  // const bindEditable = useStore((state) => state.bindEditable)
   return (
     <Canvas
       concurrent
@@ -41,7 +47,7 @@ const LCanvas = ({ children }) => {
       pixelRatio={1}
       onCreated={({ gl, scene }) => {
         useStore.setState({ gl: gl, scene: scene })
-        bindEditable(gl, scene)
+        // bindEditable(gl, scene)
         //
         // import(`react-three-editable`).then((e) => {
         //   console.log(e)
@@ -50,9 +56,9 @@ const LCanvas = ({ children }) => {
         //     localStorageNamespace: process.env.projectNameSpace + '',
         //   })({ gl, scene })
         // })
-        // bind({
-        //   localStorageNamespace: process.env.projectNameSpace + '',
-        // })({ gl, scene })
+        bind({
+          state: editableJson,
+        })({ gl, scene })
         gl.setClearColor(new THREE.Color(darkMode ? 0x111827 : 0xf9fafb))
       }}
     >

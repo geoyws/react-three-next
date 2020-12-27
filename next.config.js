@@ -17,10 +17,10 @@ const withTM = require('next-transpile-modules')(
     'three',
     '@react-three/postprocessing',
     '@react-three/drei',
-    // 'react-three-editable/dist/components/editable.d.ts',
+    'react-three-editable',
     'postprocessing',
   ],
-  { debug: true, resolveSymlinks: true }
+  { debug: true, resolveSymlinks: false }
 )
 const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
@@ -35,26 +35,26 @@ const nextConfig = {
   webpack(config) {
     config.plugins = config.plugins || []
 
-    // config.resolve.alias['three'] = path.resolve(
-    //   __dirname,
-    //   '.',
-    //   'node_modules',
-    //   'three'
-    // )
+    config.resolve.alias['three'] = path.resolve(
+      __dirname,
+      '.',
+      'node_modules',
+      'three'
+    )
 
-    // config.resolve.alias['@react-three/drei'] = path.resolve(
-    //   __dirname,
-    //   '.',
-    //   'node_modules',
-    //   '@react-three/drei'
-    // )
+    config.resolve.alias['react-three-editable'] = path.resolve(
+      __dirname,
+      '.',
+      'node_modules',
+      'react-three-editable'
+    )
 
-    // config.plugins.push(
-    //   new DuplicatePackageCheckerPlugin({
-    //     verbose: false,
-    //     strict: true,
-    //   })
-    // )
+    config.plugins.push(
+      new DuplicatePackageCheckerPlugin({
+        verbose: true,
+        strict: true,
+      })
+    )
 
     // if you want to do a custom build to reduce the size of threejs
     // config.plugins.push(

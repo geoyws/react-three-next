@@ -1,0 +1,52 @@
+{
+  "editables": {
+    "Key Light": {
+      "type": "spotLight",
+      "properties": {
+        "transform": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+      }
+    },
+    "Fill Light": {
+      "type": "spotLight",
+      "properties": {
+        "transform": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+      }
+    },
+    "Camera": {
+      "type": "perspectiveCamera",
+      "properties": {
+        "transform": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+      }
+    },
+    "Box Group": {
+      "type": "group",
+      "properties": {
+        "transform": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -20, 1]
+      }
+    },
+    "Box 1": {
+      "type": "mesh",
+      "properties": {
+        "transform": [5, 0, 0, 0, 0, 5, 0, 0, 0, 0, 5, 0, 10, 0, -5, 1]
+      }
+    },
+    "Box 2": {
+      "type": "mesh",
+      "properties": {
+        "transform": [5, 0, 0, 0, 0, 5, 0, 0, 0, 0, 5, 0, -10, 0, -5, 1]
+      }
+    },
+    "Box 3": {
+      "type": "mesh",
+      "properties": {
+        "transform": [5, 0, 0, 0, 0, 5, 0, 0, 0, 0, 5, 0, 0, 10, 0, 1]
+      }
+    },
+    "Box 4": {
+      "type": "mesh",
+      "properties": {
+        "transform": [5, 0, 0, 0, 0, 5, 0, 0, 0, 0, 5, 0, 0, -5, 5, 1]
+      }
+    }
+  }
+}

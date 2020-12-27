@@ -27,6 +27,15 @@
       "eslint --fix"
     ]
   },
+  "resolutions": {
+    "react": "^17.0.1",
+    "strip-ansi": "latest",
+    "react-dom": "^17.0.1",
+    "react-three-fiber": "^5.3.10",
+    "@react-three/drei": "^2.2.12",
+    "@react-spring/three": "^9.0.0-rc.3",
+    "three": "0.123.0"
+  },
   "dependencies": {
     "@next/bundle-analyzer": "^10.0.4",
     "autoprefixer": "^10.1.0",
@@ -82,12 +91,12 @@
     "next-videos": "^1.4.0",
     "prettier": "^2.2.1",
     "raw-loader": "^4.0.2",
-    "react": "0.0.0-experimental-4ead6b530",
+    "react": "^17.0.1",
     "react-device-detect": "^1.14.0",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-spring": "^9.0.0-rc.3",
-    "react-three-editable": "^0.8.0",
+    "react-three-editable": "https://github.com/RenaudRohlinger/react-three-editable",
     "react-three-fiber": "^5.3.10",
     "tailwindcss": "^2.0.2",
     "three": "0.123.0",

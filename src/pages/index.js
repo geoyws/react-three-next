@@ -1,6 +1,7 @@
 import useStore from '@/helpers/store'
 import MyBox from '@/components/canvas/MyBox/MyBox'
 import Head from 'next/head'
+import { editable as e } from 'react-three-editable'
 
 // import dynamic from 'next/dynamic'
 // const MyBox = dynamic(() => import('@/components/canvas/MyBox/MyBox'), {
@@ -27,11 +28,10 @@ const Dom = () => {
 }
 
 const BoxGroup = () => {
-  const e = useStore((state) => state.editable)
-  console.log(e)
-  if (!e) {
-    return <></>
-  }
+  // console.log(e)
+  // if (!e) {
+  //   return <></>
+  // }
   return (
     <e.group uniqueName='Box Group' position={[0, 0, -20]}>
       <MyBox uniqueName='Box 1' position={[10, 0, -5]} />

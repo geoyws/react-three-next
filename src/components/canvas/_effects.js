@@ -22,11 +22,9 @@ const Effects = () => {
   if (!e) {
     return null
   }
-  const ECamera = e(PerspectiveCamera, 'perspectiveCamera')
 
   return (
     <>
-      <ECamera makeDefault uniqueName='Camera' />
       <e.spotLight
         uniqueName='Key Light'
         shadow-mapSize-width={1024}

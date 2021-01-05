@@ -2,6 +2,9 @@ import { Suspense } from 'react'
 import BackButton from '@/components/dom/back/back'
 import useStore from '@/helpers/store'
 import Head from 'next/head'
+import { PerspectiveCamera } from '@react-three/drei'
+import { editable as e } from 'react-three-editable'
+
 // import Bird from '@/components/canvas/Bird/Bird'
 
 import dynamic from 'next/dynamic'
@@ -26,6 +29,7 @@ const Birds = () => {
     return (
       <Bird
         key={i}
+        index={i}
         position={[x, y, z]}
         rotation={[0, x > 0 ? Math.PI : 0, 0]}
         speed={speed}
@@ -37,14 +41,19 @@ const Birds = () => {
 }
 
 const Canvas = () => {
+  const ECamera = e(PerspectiveCamera, 'perspectiveCamera')
+
   return (
-    <group position={[0, 0, -25]}>
-      <ambientLight intensity={2} />
-      <pointLight position={[40, 40, 40]} />
-      <Suspense fallback={null}>
-        <Birds />
-      </Suspense>
-    </group>
+    <>
+      <ECamera makeDefault uniqueName='Birds Camera' />
+      <e.group uniqueName='Birds Group' position={[0, 0, -25]}>
+        <ambientLight intensity={2} />
+        <pointLight position={[40, 40, 40]} />
+        <Suspense fallback={null}>
+          <Birds />
+        </Suspense>
+      </e.group>
+    </>
   )
 }
 

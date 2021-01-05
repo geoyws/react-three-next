@@ -4,7 +4,6 @@ import useStore from '@/helpers/store'
 import { useEffect, Children } from 'react'
 import Preload from '@/components/loading/loading'
 import Header from '../config'
-
 import '../assets/styles/globals.css'
 
 function SplitApp({ canvas, dom }) {
@@ -20,7 +19,6 @@ function SplitApp({ canvas, dom }) {
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
-  const updateRoute = useStore((state) => state.updateRoute)
   const lang = router.pathname.startsWith('/jp') ? 'jp' : 'en'
   useEffect(() => {
     document.documentElement.lang = lang
@@ -37,8 +35,7 @@ function MyApp({ Component, pageProps }) {
   })
 
   useEffect(() => {
-    updateRoute(router)
-    // useStore.setState({ router: router })
+    useStore.setState({ router })
   }, [router])
 
   return r3fArr.length > 0 ? (

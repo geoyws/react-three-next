@@ -22,13 +22,15 @@ const withTM = require('next-transpile-modules')(
   ],
   { debug: true, resolveSymlinks: false }
 )
-const withPWA = require('next-pwa')
-const runtimeCaching = require('next-pwa/cache')
+
+// if PWA over next-offline
+// const withPWA = require('next-pwa')
+// const runtimeCaching = require('next-pwa/cache')
+// const prod = process.env.NODE_ENV === 'production'
+
 const withOffline = require('next-offline')
 
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
-
-const prod = process.env.NODE_ENV === 'production'
 
 const nextConfig = {
   // target: 'serverless',
@@ -79,6 +81,7 @@ module.exports = plugins(
     [reactSvg, { include: path.resolve(__dirname, 'src/assets/svg') }],
     fonts,
     videos,
+    // if PWA over next-offline
     // [
     //   withPWA,
     //   { pwa: { runtimeCaching, disable: prod ? false : true, dest: 'public' } },

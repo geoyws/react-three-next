@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import * as THREE from 'three'
 import { useFrame } from 'react-three-fiber'
 import { useGLTF } from '@react-three/drei/useGLTF'
+import { editable as e } from 'react-three-editable'
 
 const Bird = ({ speed, factor, url, ...props }) => {
   const { nodes, materials, animations } = useGLTF(url)
@@ -31,7 +32,8 @@ const Bird = ({ speed, factor, url, ...props }) => {
   return (
     <group ref={group}>
       <group name='Scene' {...props}>
-        <mesh
+        <e.mesh
+          uniqueName={'Bird ' + props.index}
           name='Object_0'
           geometry={nodes['Object_0'].geometry}
           material={materials['Material_0_COLOR_0']}

@@ -1,5 +1,5 @@
-import { Suspense, useEffect } from 'react'
-import { Canvas, useThree } from 'react-three-fiber'
+import { Suspense, useLayoutEffect } from 'react'
+import { Canvas } from 'react-three-fiber'
 import * as THREE from 'three'
 import useDarkMode from 'use-dark-mode'
 import Effects from '@/components/canvas/_effects'
@@ -8,8 +8,10 @@ import useStore from '@/helpers/store'
 // const Effects = dynamic(() => import('@/components/canvas/_effects'), {
 //   ssr: false,
 // })
-import { configure, editable } from 'react-three-editable'
+
+import { configure } from 'react-three-editable'
 import editableJson from '@/helpers/editableJson.json'
+import { Perf } from 'r3f-perf'
 
 const bind = configure({
   enablePersistence: true,
@@ -17,17 +19,15 @@ const bind = configure({
 })
 
 const UpdateSceneOnLoaded = () => {
-  const { scene } = useThree()
-  const updateScene = useStore((state) => state.updateScene)
-  useEffect(() => {
-    updateScene(scene)
-  })
+  const router = useStore((state) => state.router)
+  useLayoutEffect(() => {
+    console.log('change Editable here')
+  }, [router])
   return null
 }
 
 const LCanvas = ({ children }) => {
   const darkMode = useDarkMode()
-  // const bindEditable = useStore((state) => state.bindEditable)
   return (
     <Canvas
       concurrent
@@ -46,22 +46,14 @@ const LCanvas = ({ children }) => {
       camera={{ position: [0, 0, 0], near: 5, far: 100 }}
       pixelRatio={1}
       onCreated={({ gl, scene }) => {
-        useStore.setState({ gl: gl, scene: scene })
-        // bindEditable(gl, scene)
-        //
-        // import(`react-three-editable`).then((e) => {
-        //   console.log(e)
-        //   const bind =e.configure({
-        //     enablePersistence: true,
-        //     localStorageNamespace: process.env.projectNameSpace + '',
-        //   })({ gl, scene })
-        // })
+        useStore.setState({ gl, scene })
         bind({
-          state: editableJson,
+          state: Object.keys(editableJson).length === 0 ? null : editableJson,
         })({ gl, scene })
         gl.setClearColor(new THREE.Color(darkMode ? 0x111827 : 0xf9fafb))
       }}
     >
+      <Perf />
       <Suspense fallback={null}>
         <UpdateSceneOnLoaded />
         <Effects />

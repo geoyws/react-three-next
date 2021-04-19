@@ -7,8 +7,8 @@
   "private": false,
   "scripts": {
     "lint": "yarn prettier && yarn eslint",
-    "eslint": "eslint --fix 'src/**/*.{js,jsx}' --ext jsconfig.json",
-    "prettier": "prettier --list-different '**/*.{js,jsx,md}'",
+    "eslint": "eslint --fix 'src/**/*.{ts,tsx,js,jsx}' --ext tsconfig.json",
+    "prettier": "prettier --list-different '**/*.{ts,tsx,js,jsx,md}'",
     "dev": "next dev",
     "build": "next build",
     "export": "EXPORT=true next build && EXPORT=true next export",
@@ -22,10 +22,10 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,json,md}": [
+    "*.{ts,tsx,js,jsx,json,md}": [
       "prettier --write"
     ],
-    "*.{js,jsx}": [
+    "*.{ts,tsx,js,jsx}": [
       "eslint --fix"
     ]
   },
@@ -35,6 +35,8 @@
     "@react-three/a11y": "^2.0.0",
     "@react-three/drei": "^4.0.3",
     "@react-three/fiber": "^6.0.9",
+    "@types/tailwindcss": "^2.0.2",
+    "@types/three": "^0.127.1",
     "esbuild-loader": "^2.10.0",
     "lerp": "^1.0.3",
     "next": "^10.1.3",
@@ -73,6 +75,7 @@
     "postcss": "^8.2.9",
     "prettier": "^2.2.1",
     "raw-loader": "^4.0.2",
+    "typescript": "^4.2.4",
     "webpack": "^5.28.0"
   },
   "license": "MIT"
